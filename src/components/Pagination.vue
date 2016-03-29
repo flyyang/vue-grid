@@ -94,6 +94,7 @@
           // init option when rows changes
           this.page = 1
           this.isFirst = true
+          this.isLast = false
         }
       },
       pageTotal: function (newVal, oldVal) {

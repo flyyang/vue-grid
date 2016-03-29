@@ -2,6 +2,7 @@
 
 > vue-grid with pagination
 
+See the demo: [demo](http://flyyang.github.io/vue-grid/)
 
 ## Usage
 
