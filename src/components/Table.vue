@@ -55,6 +55,9 @@
   }	
   .search input{
     height:25px;
+  }
+  .table .operation-th {
+    width:30px;
   }	
 </style>
 
@@ -66,11 +69,13 @@
     </div>
   </template>
   <div class="table">
-    <table>
+    <table grid-select="{{checkedFields}}">
       <thead>
         <tr>
+          <th v-if="checkAble" class="operation-th"></th>
+          <th v-if="indexAble" class="operation-th"></th>
           <th v-for="item in columns" @click="sortBy(item.en)">
-					{{item.cn}}
+					  {{item.cn}}
 					</th>
         </tr>
       </thead>
@@ -78,11 +83,13 @@
         <template v-if="pageAble">
           <template v-if="filterRows.length > 0">
             <tr v-for="item in data | filterBy filterKey | orderBy sortKey sortOrders[sortKey] | limitBy pageSize pageStart">
+              <td v-if="checkAble"><input type="checkbox" id="{{item[checkedField]}}" value="{{item[checkedField]}}" v-model="checkedFields"></td>
+              <td v-if="indexAble">{{indexVal($index)}}</td>
               <td v-for="key in columnsEn" >{{{ item[key] }}} </td>
             </tr>
           </template>
           <template v-else>
-            <tr><td :colspan="columnsCn.length">没有数据</td></tr>
+            <tr><td :colspan="100">没有数据</td></tr>
           </template>
         </template>
         <template v-else>
@@ -114,6 +121,22 @@
         type: Boolean,
         default: true
       },
+      indexAble: {
+        type: Boolean,
+        default: false
+      },
+      checkedField: {
+        type: String,
+        default: 'id'
+      },
+      checkedFields: {
+        type: Array,
+        default: []
+      },
+      checkAble: {
+        type: Boolean,
+        default: false
+      },
       pageSize: {
         type: Number,
         default: 10
@@ -127,13 +150,19 @@
       },
       data: {
         type: Array,
+        default: [],
         required: true
       }
     },
     methods: {
       sortBy: function (key) {
+        this.page = 1
         this.sortKey = key
         this.sortOrders[key] *= -1
+      },
+      indexVal: function (index) {
+        index = index + 1
+        return index < 10 ? '0' + index : index
       }
     },
     computed: {

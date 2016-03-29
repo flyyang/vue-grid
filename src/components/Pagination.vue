@@ -50,6 +50,7 @@
     font-size: 12px;
     padding-top: 5px;
     margin-right: 5px;
+    margin-top: 16px;
   }
   .pagination .stastics span{
     color:#2bbb9c;
@@ -61,12 +62,12 @@
     <template v-if="rowsTotal > 0">
       <div class="pagination">
         <ul>
-          <li><a href="javascript:void(0)" @click="prev"  v-bind:class="{'disabled':isFirst}"><</a></li>
+          <li><a href="javascript:void(0)" @click="prev"  v-bind:class="{'disabled':isFirst}">&lt</a></li>
           <li v-for="n in pageChunkCurrent" v-bind:class="{'active':isActive[n+1]}" @click="nav( n+1 )"><a  href="javascript:void(0)">{{n + 1}}</a></li>
-          <li><a href="javascript:void(0)" @click="next" v-bind:class="{'disabled':isLast}">></a></li>
+          <li><a href="javascript:void(0)" @click="next" v-bind:class="{'disabled':isLast}">&gt</a></li>
         </ul>
         <div class="stastics">共<span>{{rowsTotal}}</span>条，<span>{{pageTotal}}</span>页</div>
-      <div>
+      </div>
     </template>
   </div>
 </template>
