@@ -65,7 +65,7 @@
   <div class="vue-grid">
   <template v-if="searchAble">
     <div class="operation">
-      <div class="search"><form v-on:submit.prevent id="search"><input name="query" v-model="filterKey"></div>
+      <div class="search"><form v-on:submit.prevent id="search"><input name="query" placeholder="按回车搜索" v-on:keyup.enter="getSearchKey"  v-model="filterKey"></div>
     </div>
   </template>
   <div class="table">
@@ -82,7 +82,7 @@
       <tbody>
         <template v-if="pageAble">
           <template v-if="filterRows.length > 0">
-            <tr v-for="item in data | filterBy filterKey | orderBy sortKey sortOrders[sortKey] | limitBy pageSize pageStart">
+            <tr v-for="item in data | filterBy filterKeySearch | orderBy sortKey sortOrders[sortKey] | limitBy pageSize pageStart">
               <td v-if="checkAble"><input type="checkbox" id="{{item[checkedField]}}" value="{{item[checkedField]}}" v-model="checkedFields"></td>
               <td v-if="indexAble">{{indexVal($index)}}</td>
               <td v-for="key in columnsEn" >{{{ item[key] }}} </td>
@@ -93,7 +93,7 @@
           </template>
         </template>
         <template v-else>
-          <tr v-for="item in data | filterBy filterKey | orderBy sortKey sortOrders[sortKey]">
+          <tr v-for="item in data | filterBy filterKeySearch | orderBy sortKey sortOrders[sortKey]">
             <td v-for="key in columnsEn" >{{{ item[key] }}} </td>
           </tr>
         </template>
@@ -163,12 +163,16 @@
       indexVal: function (index) {
         index = index + 1
         return index < 10 ? '0' + index : index
+      },
+      getSearchKey: function () {
+        this.filterKeySearch = this.filterKey
+        this.page = 1
       }
     },
     computed: {
       filterRows: function () {
         this.page = 1
-        return this.$options.filters.filterBy(this.data, this.filterKey)
+        return this.$options.filters.filterBy(this.data, this.filterKeySearch)
       },
       pageStart: function () {
         return (this.page - 1) * this.pageSize
@@ -202,6 +206,7 @@
       return {
         sortKey: '',
         filterKey: '',
+        filterKeySearch: '',
         page: 1,
         sortOrders: sortOrders
       }

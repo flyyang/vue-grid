@@ -63,5 +63,22 @@
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.6.0",
     "webpack-merge": "^0.8.3"
-  }
+  },
+  "main": "src/main.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flyyang/vue-grid.git"
+  },
+  "keywords": [
+    "vue-grid",
+    "vue-pagination"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/flyyang/vue-grid/issues"
+  },
+  "homepage": "https://github.com/flyyang/vue-grid#readme"
 }
